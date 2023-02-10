@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Robelek/chessProject/chess-project/static/css/main.073c9b0a.css",
-    "main.js": "/Robelek/chessProject/chess-project/static/js/main.d148b513.js",
-    "static/js/787.93d3c0b5.chunk.js": "/Robelek/chessProject/chess-project/static/js/787.93d3c0b5.chunk.js",
-    "static/media/logo.svg": "/Robelek/chessProject/chess-project/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "index.html": "/Robelek/chessProject/chess-project/index.html",
-    "main.073c9b0a.css.map": "/Robelek/chessProject/chess-project/static/css/main.073c9b0a.css.map",
-    "main.d148b513.js.map": "/Robelek/chessProject/chess-project/static/js/main.d148b513.js.map",
-    "787.93d3c0b5.chunk.js.map": "/Robelek/chessProject/chess-project/static/js/787.93d3c0b5.chunk.js.map"
+    "main.css": "/chessProject/static/css/main.073c9b0a.css",
+    "main.js": "/chessProject/static/js/main.094de54e.js",
+    "static/js/787.93d3c0b5.chunk.js": "/chessProject/static/js/787.93d3c0b5.chunk.js",
+    "static/media/logo.svg": "/chessProject/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/chessProject/index.html",
+    "main.073c9b0a.css.map": "/chessProject/static/css/main.073c9b0a.css.map",
+    "main.094de54e.js.map": "/chessProject/static/js/main.094de54e.js.map",
+    "787.93d3c0b5.chunk.js.map": "/chessProject/static/js/787.93d3c0b5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.d148b513.js"
+    "static/js/main.094de54e.js"
   ]
 }
