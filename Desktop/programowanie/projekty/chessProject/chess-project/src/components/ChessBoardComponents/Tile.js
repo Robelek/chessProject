@@ -10,7 +10,8 @@ function Tile(props) {
    
    if(typeof props.player == "string")
    {
-    whatToRender =  <img className={"Piece "+props.player} src={"chessProject/images/chessPieces/"+props.image_name} />; 
+    whatToRender =  <img className={"Piece "+props.player} src={process.env.PUBLIC_URL+"/images/chessPieces/"+props.image_name} />; 
+    
    }
 
 
