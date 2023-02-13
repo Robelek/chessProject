@@ -17,3 +17,16 @@ export class Vector2
         this.y+=secondVector.y;
     }
 }
+
+export class GameState
+{
+    constructor()
+    {
+        this.white_points = 0;
+        this.black_points = 0;
+        
+        this.turnOf = "white";
+
+        this.currentlySelectedPieceID = null;
+    }
+}

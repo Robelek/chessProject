@@ -10,11 +10,11 @@ function ChessBoard(props) {
 
 
 
-    const ChessBoardSize = 8;
+    const ChessBoardSize = props.ChessBoardSize;
 
-    for(let x=0;x<ChessBoardSize;x++)
+    for(let y=0;y<ChessBoardSize;y++)
     {
-        for(let y=0;y<ChessBoardSize;y++)
+        for(let x=0;x<ChessBoardSize;x++)
         {
 
             let color = "white";
@@ -36,7 +36,7 @@ function ChessBoard(props) {
             let id = y*ChessBoardSize+x;
 
 
-            let thisPosition = new Vector2(y, x);
+            let thisPosition = new Vector2(x, y);
 
             let PieceOnThisTile = [];
 
@@ -49,8 +49,18 @@ function ChessBoard(props) {
                 }
             }
 
+            let possibleMove = false;
+
+            if(props.overlayMoves.find((position) =>
+            {
+                return position.x == x && position.y == y;
+            }))
+            {
+                possibleMove = true;
+            }
+
             TileArray.push(
-            <Tile key={id} color={color} {...PieceOnThisTile} >
+            <Tile key={id} id={id} color={color} {...PieceOnThisTile} gameFunctions = {props.gameFunctions} possibleMove = {possibleMove}>
             </Tile>);
         }
     }
