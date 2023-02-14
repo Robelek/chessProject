@@ -42,7 +42,7 @@ function ChessBoard(props) {
 
             for(let i=0;i<Pieces.length;i++)
             {
-                if(Pieces[i].position.isEqualTo(thisPosition))
+                if(Pieces[i].isAlive && Pieces[i].position.isEqualTo(thisPosition))
                 {
                     PieceOnThisTile = Pieces[i];
                     i = Pieces.length;
@@ -57,6 +57,7 @@ function ChessBoard(props) {
             }))
             {
                 possibleMove = true;
+                console.log(`Possible move: ${thisPosition.x}, ${thisPosition.y}`);
             }
 
             TileArray.push(

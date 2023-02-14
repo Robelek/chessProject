@@ -53,8 +53,9 @@ function App(props) {
     }
 
     
-
+    setGameState(new GameState());
     setPieces(newPieces);
+    setOverlayMoves([]);
   }
 
   function GetIdFromPosition(position)
@@ -70,6 +71,10 @@ function App(props) {
     return new Vector2(x, y);
   }
 
+  function isPositionInBoard(position)
+  {
+    return position.x>=0&&position.x<ChessBoardSize&&position.y>=0&&position.y<ChessBoardSize;
+  }
   function DisplayAvailableMoves(e, player, image_name, position, pieceID )
   {
     console.log(`${pieceID}, (${position.x}, ${position.y})`);
@@ -110,37 +115,68 @@ function App(props) {
           {
             let positionToCheck = new Vector2(position.x, position.y + ownerMultiplier*(i+1));
 
-            let tileID = "Tile_" + GetIdFromPosition(positionToCheck);
-
-            let noPieceHere = true;
-
-            let tileChildren = document.getElementById(tileID).children;
-            for(let j=0;j<tileChildren.length;j++)
+            if(isPositionInBoard(positionToCheck))
             {
-              if(tileChildren[i]!==undefined)
-              {
-                  if(tileChildren[i].tagName == "IMG")
+                let tileID = "Tile_" + GetIdFromPosition(positionToCheck);
+
+                let noPieceHere = true;
+
+                let tileChildren = document.getElementById(tileID).children;
+                for(let j=0;j<tileChildren.length;j++)
                 {
-                  noPieceHere = false;
+                  if(tileChildren[i]!==undefined)
+                  {
+                      if(tileChildren[i].tagName == "IMG")
+                    {
+                      noPieceHere = false;
+                    }
+                    else if(tileChildren[i].tagName=="DIV")
+                    {
+                      console.log("working");
+                    }
+                  }
+                  
                 }
-                else if(tileChildren[i].tagName=="DIV")
+
+                if(noPieceHere)
                 {
-                  console.log("working");
+                  possibleMoves.push(positionToCheck);
+                }
+                else
+                {
+                  
+                  i=2;
+                }
+
+            }
+            
+
+          }
+
+          //let's check diagonals
+          for(let i=-1;i<2;i+=2)
+          {
+            let positionToCheck = new Vector2(position.x+i, position.y+ownerMultiplier);
+          
+            if(isPositionInBoard(positionToCheck))
+            {
+              let tileID = "Tile_" + GetIdFromPosition(positionToCheck);
+              let tileChildren = document.getElementById(tileID).children;
+              
+  
+              for(let j=0;j<tileChildren.length;j++)
+              {
+                if(tileChildren[j] !== undefined && tileChildren[j].tagName == "IMG" && tileChildren[j].classList.contains("Piece") 
+                && !tileChildren[j].classList.contains(currentGameState.turnOf))
+                {
+                    possibleMoves.push(positionToCheck);
+                   
+                    console.log(`found one: ${positionToCheck.x}, ${positionToCheck.y}`);
+                    j=tileChildren.length;
                 }
               }
-              
             }
-
-            if(noPieceHere)
-            {
-              possibleMoves.push(positionToCheck);
-            }
-            else
-            {
-              
-              i=2;
-            }
-
+           
 
           }
         
@@ -158,11 +194,27 @@ function App(props) {
   {
     let newPieces = [...Pieces];
 
+   
+    let thisTile = document.getElementById("Tile_"+tileID);
+    let thisPosition = GetPositionFromTileId(tileID);
+    
+    let indexToRemove = newPieces.findIndex((currentPiece) =>
+    {
+      return currentPiece.position.isEqualTo(thisPosition);
+    })
+    if(indexToRemove>0)
+    {
+      newPieces.splice(indexToRemove,1);
+    }
+    
+  
+  
+
     let pieceIndex = newPieces.findIndex(thisPiece => {
       return thisPiece.pieceID == currentGameState.currentlySelectedPieceID;
     })
 
-    newPieces[pieceIndex].position = GetPositionFromTileId(tileID)
+    newPieces[pieceIndex].position = thisPosition;
     
     console.log(`${currentGameState.currentlySelectedPieceID} to ${tileID}`);
 
@@ -188,6 +240,7 @@ function App(props) {
     "InitialiseChessBoard" : InitialiseChessBoard, 
     "DisplayAvailableMoves" : DisplayAvailableMoves,
     "MovePiece" : MovePiece};
+
 
   
   return (
