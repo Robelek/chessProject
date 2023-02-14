@@ -3,7 +3,7 @@ import ChessBoard from './components/ChessBoard';
 import UserInterface from './components/UserInterface';
 import Piece from './gameLogic/Piece';
 import {Vector2, GameState, GetIdFromPosition, GetPositionFromTileId, isPositionInBoard, 
-  makeNewChessBoard, handlePieceMovement, handlePawnMovement
+  makeNewChessBoard, handlePieceMovement, handlePawnMovement, handleTowerMovement
 } from './gameLogic/GameLogic';
 
 import { useState } from 'react';
@@ -43,6 +43,9 @@ function App(props) {
     {
       case "pawn.png":
         possibleMoves = handlePawnMovement(Pieces, pieceID, currentGameState, ChessBoardSize, position);
+        break;
+      case "tower.png":
+        possibleMoves = handleTowerMovement(Pieces, pieceID, currentGameState, ChessBoardSize, position);
         break;
       default:
         console.log("not handled yet");

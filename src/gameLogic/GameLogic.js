@@ -17,6 +17,11 @@ export class Vector2
         this.x+=secondVector.x;
         this.y+=secondVector.y;
     }
+
+    multiply(multiplier)
+    {
+      return new Vector2(this.x*multiplier, this.y*multiplier);
+    }
 }
 
 export class GameState
@@ -124,9 +129,9 @@ export function handlePawnMovement(Pieces, pieceID, currentGameState, ChessBoard
             let tileChildren = document.getElementById(tileID).children;
             for(let j=0;j<tileChildren.length;j++)
             {
-              if(tileChildren[i]!==undefined)
+              if(tileChildren[j]!==undefined)
               {
-                  if(tileChildren[i].classList.contains("Piece"))
+                  if(tileChildren[j].classList.contains("Piece"))
                 {
                   noPieceHere = false;
                 }
@@ -179,6 +184,87 @@ export function handlePawnMovement(Pieces, pieceID, currentGameState, ChessBoard
     return possibleMoves;
     
 }
+
+export function handleTowerMovement(Pieces, pieceID, currentGameState, ChessBoardSize, position)
+{
+    console.log("Tower here!");
+
+    let possibleMoves = [];
+
+    let thisPieceIndex = Pieces.findIndex((currentPiece) =>
+    {
+      return currentPiece.pieceID === pieceID;
+    } );
+
+    let dirs = [
+      new Vector2(0, -1),
+      new Vector2(1, 0),
+      new Vector2(-1, 0),
+      new Vector2(0, 1)
+     
+    ];
+
+    for(let i=0;i<4;i++)
+    {
+        
+        let noPieceHere = true;
+        let multiplier = 1;
+
+        let currentPosition = new Vector2(position.x + dirs[i].x * multiplier, position.y + dirs[i].y*multiplier );
+
+        while(isPositionInBoard(currentPosition, ChessBoardSize)&&noPieceHere)
+        {
+         
+
+          let currentTileID = "Tile_"+GetIdFromPosition(currentPosition, ChessBoardSize);
+          console.log(`${currentTileID}`);
+
+          let currentTileChildren = document.getElementById(currentTileID).children;
+
+          console.table(currentTileChildren);
+
+          
+
+          for(let j=0;j<currentTileChildren.length;j++)
+          {
+            if(currentTileChildren[j] !== undefined)
+            {
+              if(currentTileChildren[j].classList.contains("Piece"))
+              {
+                noPieceHere = false;
+              }
+            }
+          }
+          if(noPieceHere)
+          {
+            possibleMoves.push(currentPosition);
+          
+          }
+          else
+          {
+            //placeholder
+            let pieceToCheck = Pieces.find((currentPiece) =>
+            {
+              return currentPiece.position.x == currentPosition.x && currentPiece.position.y ==currentPosition.y;
+            });
+
+            if(pieceToCheck.player !== currentGameState.turnOf)
+            {
+              possibleMoves.push(currentPosition);
+            }
+           
+          }
+          multiplier++;
+          currentPosition = new Vector2(position.x + dirs[i].x * multiplier, position.y + dirs[i].y*multiplier );
+        }
+
+    }
+    console.log(possibleMoves.length);
+     
+    return possibleMoves;
+    
+}
+
 export function handlePieceMovement(Pieces, ChessBoardSize, currentGameState, tileID)
 {
     let newPieces = [...Pieces];

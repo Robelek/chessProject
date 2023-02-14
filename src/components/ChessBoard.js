@@ -57,7 +57,7 @@ function ChessBoard(props) {
             }))
             {
                 possibleMove = true;
-                console.log(`Possible move: ${thisPosition.x}, ${thisPosition.y}`);
+
             }
 
             TileArray.push(
