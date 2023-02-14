@@ -10,10 +10,12 @@ function Tile(props) {
    
    if(typeof props.player == "string")
    {
-    whatToRender =  <img id = {props.pieceID} className={"Piece "+props.player} 
+    whatToRender =  <div className={"Piece "+props.player}>
+      <img id = {props.pieceID}  
       src={process.env.PUBLIC_URL+"/images/chessPieces/"+props.image_name} 
       onClick = {e => props.gameFunctions["DisplayAvailableMoves"](e.target, props.player, props.image_name, props.position , props.pieceID)}
-      />; 
+      />
+    </div>  ; 
     
    }
 
